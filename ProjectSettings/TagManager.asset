@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ball
   - rat
+  - cat
   layers:
   - Default
   - TransparentFX

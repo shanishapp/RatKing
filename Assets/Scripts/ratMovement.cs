@@ -1,9 +1,12 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+ using UnityEngine.SceneManagement;
 
-public class ratMovement : MonoBehaviour
+
+ public class ratMovement : MonoBehaviour
 {
     private Rigidbody2D _rb;
     public float mRatSpeed;
@@ -38,11 +41,14 @@ public class ratMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         Debug.Log("collision detected ");
-        if(other.gameObject.CompareTag("ball"))
+        if (other.gameObject.CompareTag("ball"))
+        {
+            transform.DOScale(transform.localScale.y + 0.01f, 1);
             Destroy(other.gameObject);
+        }
         else if (other.gameObject.CompareTag("cat"))
         {
-              //GAME OVER
+            SceneManager.LoadScene(2);
         }
     }
 }
