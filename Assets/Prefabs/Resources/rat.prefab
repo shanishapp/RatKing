@@ -98,6 +98,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mRatSpeed: 0.1
+  numOfBalls: 1
+  hole: {fileID: 0}
+  innerLight: {fileID: 0}
+  outerLight: {fileID: 0}
+  level: 0
+  mSpawner: {fileID: 0}
 --- !u!58 &5251468948963847842
 CircleCollider2D:
   m_ObjectHideFlags: 0
