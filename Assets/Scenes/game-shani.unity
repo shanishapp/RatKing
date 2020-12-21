@@ -629,6 +629,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2102657633}
     - target: {fileID: 5251468948963847841, guid: 4e726b78b33f96940ab9d818c67c2d76, type: 3}
+      propertyPath: mRatSpeed
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 5251468948963847841, guid: 4e726b78b33f96940ab9d818c67c2d76, type: 3}
       propertyPath: innerLight
       value: 
       objectReference: {fileID: 1908248368}

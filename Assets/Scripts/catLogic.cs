@@ -13,6 +13,7 @@ namespace DefaultNamespace
 
         private void Start()
         {
+            
         }
 
         private void FixedUpdate()
@@ -20,6 +21,7 @@ namespace DefaultNamespace
             time += (Time.deltaTime / 7 * timeFactor);
             float x = Mathf.Cos(time * mCatSpeed) * radius;
             float y = Mathf.Sin(time * mCatSpeed) * radius;
+            transform.localEulerAngles = new Vector3(x,y,-radius*radius);
             transform.localPosition = new Vector3(x,y,0);
         }
     }

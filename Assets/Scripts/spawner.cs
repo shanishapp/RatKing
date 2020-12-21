@@ -16,6 +16,7 @@ public class spawner : MonoBehaviour
     public int numOfBads;
     public int numOfGoods;
     public int numOfCircles;
+    public GameObject[] cats;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +55,7 @@ public class spawner : MonoBehaviour
 
             for (int index = 0; index < numOfCats; index++)
             {
-                GameObject catGO = Instantiate(Resources.Load("cat")) as GameObject;
+                GameObject catGO = Instantiate(cats[index%6]) as GameObject;
                 float xPosition = (xInitialRadius +  spaceBetweenCircles * (i+1)) * Mathf.Cos(angle * index);
                 float yPosition = (yInitialRadius + (spaceBetweenCircles * (i+1))) * Mathf.Sin(angle * index);
 
