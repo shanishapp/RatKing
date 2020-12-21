@@ -1,14 +1,16 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+ using UnityEngine.SceneManagement;
 
-public class ratMovement : MonoBehaviour
+
+ public class ratMovement : MonoBehaviour
 {
     private Rigidbody2D _rb;
     public float mRatSpeed;
-<<<<<<< Updated upstream
-=======
+
     public int numOfBalls;
     private int numOfBallsCollected = 0;
     public GameObject hole;
@@ -17,17 +19,13 @@ public class ratMovement : MonoBehaviour
     public int level = 1;
     public GameObject mSpawner;
     private Vector3 initialPlace;
->>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
-<<<<<<< Updated upstream
-=======
         initialPlace = transform.position;
         Scorer.need = numOfBalls + 1;
->>>>>>> Stashed changes
     }
 
     // Update is called once per frame
@@ -54,13 +52,10 @@ public class ratMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         Debug.Log("collision detected ");
-        if(other.gameObject.CompareTag("ball"))
-            Destroy(other.gameObject);
-<<<<<<< Updated upstream
-        else if (other.gameObject.CompareTag("cat"))
+        if (other.gameObject.CompareTag("ball"))
         {
-              //GAME OVER
-=======
+            transform.DOScale(transform.localScale.y + 0.01f, 1);
+            Destroy(other.gameObject);
             numOfBallsCollected++;
             Scorer.have++;
             if (numOfBallsCollected == Scorer.need)
@@ -87,6 +82,7 @@ public class ratMovement : MonoBehaviour
             Scorer.have = 0;
             numOfBalls += level;
             Scorer.need = numOfBalls + 1;
+
             transform.position = initialPlace;
             mSpawner.GetComponent<spawner>().numOfBads += level;
             mSpawner.GetComponent<spawner>().numOfGoods += level;
@@ -109,7 +105,7 @@ public class ratMovement : MonoBehaviour
             yield return new WaitForSeconds (0.1f);
             outerLight.color = outerColor;
             yield return new WaitForSeconds (0.1f);
->>>>>>> Stashed changes
+
         }
     }
 }

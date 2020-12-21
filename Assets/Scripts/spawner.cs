@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SceneManagerScript : MonoBehaviour
+
+public class spawner : MonoBehaviour
 {
     public Transform parent;
     public float spawnGoodsSpeed;
     public float spawnBadsSpeed;
-    public float spawncatsWait;
     public float yInitialRadius;
     public float xInitialRadius;
     public float spaceBetweenCircles;
-
-
+    public int numOfBads;
+    public int numOfGoods;
     public int numOfCircles;
 
     // Start is called before the first frame update
@@ -26,7 +27,7 @@ public class SceneManagerScript : MonoBehaviour
 
     IEnumerator spawnGoods()
     {
-        while (true)
+        for (int i=0; i<numOfGoods; i++)
         {
             yield return new WaitForSeconds(spawnGoodsSpeed);
             GameObject goodGO = Instantiate(Resources.Load("goodBall")) as GameObject;
@@ -35,7 +36,7 @@ public class SceneManagerScript : MonoBehaviour
     }
     IEnumerator spawnBads()
     {
-        while (true)
+        for (int i=0; i<numOfBads; i++)
         {
             yield return new WaitForSeconds(spawnBadsSpeed);
             GameObject badGO = Instantiate(Resources.Load("badBall")) as GameObject;
@@ -54,7 +55,6 @@ public class SceneManagerScript : MonoBehaviour
             for (int index = 0; index < numOfCats; index++)
             {
                 GameObject catGO = Instantiate(Resources.Load("cat")) as GameObject;
-
                 float xPosition = (xInitialRadius +  spaceBetweenCircles * (i+1)) * Mathf.Cos(angle * index);
                 float yPosition = (yInitialRadius + (spaceBetweenCircles * (i+1))) * Mathf.Sin(angle * index);
 
@@ -81,5 +81,20 @@ public class SceneManagerScript : MonoBehaviour
             
         }
         yield return new WaitForSeconds(spawnBadsSpeed);
+    }
+
+    public void respawn()
+    {
+        var foundGameObjects = FindObjectsOfType<GameObject>();
+        foreach (GameObject go in foundGameObjects)
+        {
+            if (go.CompareTag("cat") || go.CompareTag("ball"))
+            {
+                Destroy(go);
+            }
+        }
+        StartCoroutine(spawnGoods());
+        StartCoroutine(spawnBads());
+        StartCoroutine(spawnCats());
     }
 }
