@@ -10,12 +10,13 @@ using DG.Tweening;
 {
     private Rigidbody2D _rb;
     public float mRatSpeed;
+
     public int numOfBalls;
     private int numOfBallsCollected = 0;
     public GameObject hole;
     public SpriteRenderer innerLight;
     public SpriteRenderer outerLight;
-    public int level = 0;
+    public int level = 1;
     public GameObject mSpawner;
     private Vector3 initialPlace;
 
@@ -24,6 +25,7 @@ using DG.Tweening;
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
         initialPlace = transform.position;
+        Scorer.need = numOfBalls + 1;
     }
 
     // Update is called once per frame
@@ -55,7 +57,8 @@ using DG.Tweening;
             transform.DOScale(transform.localScale.y + 0.01f, 1);
             Destroy(other.gameObject);
             numOfBallsCollected++;
-            if (numOfBallsCollected == numOfBalls)
+            Scorer.have++;
+            if (numOfBallsCollected == Scorer.need)
             {
                 hole.GetComponent<Collider2D>().enabled = true;
                 StartCoroutine("flickerLights");
@@ -76,7 +79,10 @@ using DG.Tweening;
                                         innerLight.color.g, 
                                         innerLight.color.b,0);
             numOfBallsCollected = 0;
+            Scorer.have = 0;
             numOfBalls += level;
+            Scorer.need = numOfBalls + 1;
+
             transform.position = initialPlace;
             mSpawner.GetComponent<spawner>().numOfBads += level;
             mSpawner.GetComponent<spawner>().numOfGoods += level;
@@ -99,6 +105,7 @@ using DG.Tweening;
             yield return new WaitForSeconds (0.1f);
             outerLight.color = outerColor;
             yield return new WaitForSeconds (0.1f);
+
         }
     }
 }
