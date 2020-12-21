@@ -16,11 +16,14 @@ using DG.Tweening;
     public SpriteRenderer innerLight;
     public SpriteRenderer outerLight;
     public int level = 0;
+    public GameObject mSpawner;
+    private Vector3 initialPlace;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
+        initialPlace = transform.position;
     }
 
     // Update is called once per frame
@@ -52,16 +55,33 @@ using DG.Tweening;
             transform.DOScale(transform.localScale.y + 0.01f, 1);
             Destroy(other.gameObject);
             numOfBallsCollected++;
-            hole.GetComponent<Collider2D>().enabled = true;
-            StartCoroutine(flickerLights());
-
+            if (numOfBallsCollected == numOfBalls)
+            {
+                hole.GetComponent<Collider2D>().enabled = true;
+                StartCoroutine("flickerLights");
+            }
         }
         else if (other.gameObject.CompareTag("cat"))
         {
             SceneManager.LoadScene(2);
         } else if (other.gameObject.CompareTag("hole"))
         {
+            hole.GetComponent<Collider2D>().enabled = false;
             level++;
+            StopCoroutine("flickerLights");
+            outerLight.color = new Color(outerLight.color.r,
+                                        outerLight.color.g, 
+                                        outerLight.color.b,0);            
+            innerLight.color = new Color(innerLight.color.r,
+                                        innerLight.color.g, 
+                                        innerLight.color.b,0);
+            numOfBallsCollected = 0;
+            numOfBalls += level;
+            transform.position = initialPlace;
+            mSpawner.GetComponent<spawner>().numOfBads += level;
+            mSpawner.GetComponent<spawner>().numOfGoods += level;
+            mSpawner.GetComponent<spawner>().numOfCircles += 1;
+            mSpawner.GetComponent<spawner>().respawn();
         }
     }
 

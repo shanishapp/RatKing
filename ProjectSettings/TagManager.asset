@@ -7,6 +7,9 @@ TagManager:
   - ball
   - rat
   - cat
+  - hole
+  - eventSystem
+  - sceneManager
   layers:
   - Default
   - TransparentFX

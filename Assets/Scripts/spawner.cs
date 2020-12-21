@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class spawner : MonoBehaviour
@@ -14,10 +15,6 @@ public class spawner : MonoBehaviour
     public float spaceBetweenCircles;
     public int numOfBads;
     public int numOfGoods;
-    private ArrayList allGOS;
-
-
-
     public int numOfCircles;
 
     // Start is called before the first frame update
@@ -26,7 +23,6 @@ public class spawner : MonoBehaviour
         StartCoroutine(spawnGoods());
         StartCoroutine(spawnBads());
         StartCoroutine(spawnCats());
-        allGOS = new ArrayList();
     }
 
     IEnumerator spawnGoods()
@@ -44,7 +40,6 @@ public class spawner : MonoBehaviour
         {
             yield return new WaitForSeconds(spawnBadsSpeed);
             GameObject badGO = Instantiate(Resources.Load("badBall")) as GameObject;
-            allGOS.Add(badGO);
             badGO.transform.localPosition = Vector3.zero;
         }
     }
@@ -60,7 +55,6 @@ public class spawner : MonoBehaviour
             for (int index = 0; index < numOfCats; index++)
             {
                 GameObject catGO = Instantiate(Resources.Load("cat")) as GameObject;
-                allGOS.Add(catGO);
                 float xPosition = (xInitialRadius +  spaceBetweenCircles * (i+1)) * Mathf.Cos(angle * index);
                 float yPosition = (yInitialRadius + (spaceBetweenCircles * (i+1))) * Mathf.Sin(angle * index);
 
@@ -91,9 +85,13 @@ public class spawner : MonoBehaviour
 
     public void respawn()
     {
-        foreach (GameObject go in allGOS)
+        var foundGameObjects = FindObjectsOfType<GameObject>();
+        foreach (GameObject go in foundGameObjects)
         {
-            Destroy(go);
+            if (go.CompareTag("cat") || go.CompareTag("ball"))
+            {
+                Destroy(go);
+            }
         }
         StartCoroutine(spawnGoods());
         StartCoroutine(spawnBads());
