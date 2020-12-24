@@ -18,11 +18,35 @@ namespace DefaultNamespace
 
         private void FixedUpdate()
         {
-            time += (Time.deltaTime / 7 * timeFactor);
-            float x = Mathf.Cos(time * mCatSpeed) * radius;
-            float y = Mathf.Sin(time * mCatSpeed) * radius;
-            transform.localEulerAngles = new Vector3(x,y,-radius*radius);
-            transform.localPosition = new Vector3(x,y,0);
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                timeFactor = 1f;
+                time += (Time.deltaTime / 7 * timeFactor);
+                float x = Mathf.Cos(time * mCatSpeed) * radius;
+                float y = Mathf.Sin(time * mCatSpeed) * radius;
+                float oldX = transform.localPosition.x;
+                float oldy = transform.localPosition.y;
+
+                float angle = Mathf.Atan2(y-oldy, x-oldX) * Mathf.Rad2Deg;
+                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+                transform.localPosition = new Vector3(x,y,0);
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                timeFactor = -1f;
+                time += (Time.deltaTime / 7 * timeFactor);
+                float x = Mathf.Cos(time * mCatSpeed) * radius;
+                float y = Mathf.Sin(time * mCatSpeed) * radius;
+                float oldX = transform.localPosition.x;
+                float oldy = transform.localPosition.y;
+
+                float angle = Mathf.Atan2(y-oldy, x-oldX) * Mathf.Rad2Deg;
+                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+                transform.localPosition = new Vector3(x,y,0);
+            }
+            
+            
+
         }
     }
 }
