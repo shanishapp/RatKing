@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using Random = System.Random;
 
 public class shapeLogic : MonoBehaviour
 {
+    public Light2D light;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,14 +27,17 @@ public class shapeLogic : MonoBehaviour
         Color tmp = sr.color;
         while(true)
         {
-            sr.color = new Color(tmp.r,tmp.g, tmp.b,0);
             yield return new WaitForSeconds (0.1f);
-            sr.color = new Color(r1,g1, b1,1f);
-            yield return new WaitForSeconds (1f); 
+            sr.color = Color.HSVToRGB(r1, 1, 1);
+            light.color =  Color.HSVToRGB(r1, 1, 1);
+            yield return new WaitForSeconds (0.1f); 
             sr.color = new Color(r2,b2, g2,0);
             yield return new WaitForSeconds (0.1f);
-            sr.color = new Color(r1,g1, b1,1f);
-            yield return new WaitForSeconds (1f);
+            sr.color = Color.HSVToRGB(r1, 1, 1);
+            light.color =  Color.HSVToRGB(r1, 1, 1);
+            yield return new WaitForSeconds (0.1f); 
+            sr.color = new Color(r2,b2, g2,0);
+            
         }
     }
 
