@@ -19,6 +19,7 @@ using DG.Tweening;
     public int level = 1;
     public GameObject mSpawner;
     private Vector3 initialPlace;
+    public Camera MCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,9 @@ using DG.Tweening;
     // Update is called once per frame
     void FixedUpdate()
     {
+        float oldX = transform.localPosition.x;
+        float oldy = transform.localPosition.y;
+        
         if (Input.GetKey(KeyCode.UpArrow))
         {
             transform.position += (Vector3.up * (mRatSpeed ));
@@ -47,6 +51,13 @@ using DG.Tweening;
         {
             transform.position += (Vector3.right * (mRatSpeed));
         }
+        else
+        {
+            return;
+        }
+        float angle = Mathf.Atan2(transform.position.y-oldy, 
+                                    transform.position.x-oldX) * Mathf.Rad2Deg;
+        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -54,7 +65,7 @@ using DG.Tweening;
         Debug.Log("collision detected ");
         if (other.gameObject.CompareTag("ball"))
         {
-            transform.DOScale(transform.localScale.y + 0.01f, 1);
+            transform.DOScale(transform.localScale.y + 0.005f, 1);
             Destroy(other.gameObject);
             numOfBallsCollected++;
             Scorer.have++;
@@ -71,6 +82,8 @@ using DG.Tweening;
         {
             hole.GetComponent<Collider2D>().enabled = false;
             level++;
+            MCamera.DOOrthoSize(3 + (0.5f*level), 1);
+
             StopCoroutine("flickerLights");
             outerLight.color = new Color(outerLight.color.r,
                                         outerLight.color.g, 
@@ -84,10 +97,15 @@ using DG.Tweening;
             Scorer.need = numOfBalls + 1;
 
             transform.position = initialPlace;
-            mSpawner.GetComponent<spawner>().numOfBads += level;
-            mSpawner.GetComponent<spawner>().numOfGoods += level;
-            mSpawner.GetComponent<spawner>().numOfCircles += 1;
+
+            mSpawner.GetComponent<spawner>().numOfGoods = Scorer.need;
             mSpawner.GetComponent<spawner>().respawn();
+        }
+        else if (other.gameObject.CompareTag("badBall"))
+        {
+            Destroy(other.gameObject);
+            StartCoroutine(flickerPlayer());
+            transform.DOJump(transform.position, 1, 1, 1);
         }
     }
 
@@ -106,6 +124,20 @@ using DG.Tweening;
             outerLight.color = outerColor;
             yield return new WaitForSeconds (0.1f);
 
+        }
+    }
+    
+    IEnumerator flickerPlayer()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        //sr.color = new Color(2,0,0);
+        Color tmp = sr.color;
+        for(int i =0; i<10;i++)
+        {
+            sr.color = new Color(tmp.r,tmp.g, tmp.b,0);
+            yield return new WaitForSeconds (0.1f);
+            sr.color = tmp;
+            yield return new WaitForSeconds (0.1f);
         }
     }
 }
