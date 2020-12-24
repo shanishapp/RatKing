@@ -251,7 +251,7 @@ PrefabInstance:
       objectReference: {fileID: 7540317207807665226, guid: 496f13b6c1bdb304fb3bd7f4589e659f, type: 3}
     - target: {fileID: 6696506957712132128, guid: c6d4c5fd83b7f4142be65d5e7a56d0d9, type: 3}
       propertyPath: m_Name
-      value: blackCatWithNose
+      value: player
       objectReference: {fileID: 0}
     - target: {fileID: 7778073937156264698, guid: c6d4c5fd83b7f4142be65d5e7a56d0d9, type: 3}
       propertyPath: m_RootOrder

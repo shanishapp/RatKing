@@ -1,5 +1,7 @@
 ﻿using System;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace DefaultNamespace
 {
@@ -10,6 +12,7 @@ namespace DefaultNamespace
         public float mCatSpeed;
         public float timeFactor = 1f;
         public GameObject beam;
+        public Transform CircleTransform;
 
 
         private void Start()
@@ -17,7 +20,7 @@ namespace DefaultNamespace
             
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (Input.GetKey(KeyCode.LeftArrow))
             {
@@ -45,16 +48,12 @@ namespace DefaultNamespace
                 transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
                 transform.localPosition = new Vector3(x,y,0);
             }
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetButtonDown("Jump"))
             {
-                GameObject go = Instantiate(beam);
-                go.transform.localRotation = transform.localRotation;
-                go.transform.position = transform.position;
+                transform.DOShakeScale(0.1f,Vector3.one*0.1f);
+                CircleTransform.DOShakeScale(0.1f,Vector3.one*0.1f);
+                Instantiate(beam, transform.position, transform.localRotation);
             }
-
-            
-            
-            
 
         }
     }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5175044735059171275}
   - component: {fileID: 590364714001849107}
   m_Layer: 0
-  m_Name: blackCatWithNose
+  m_Name: player
   m_TagString: cat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 3.16, y: 3.09}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &5175044735059171275
@@ -100,6 +100,7 @@ MonoBehaviour:
   radius: 100
   mCatSpeed: 1
   timeFactor: 1
+  beam: {fileID: 0}
 --- !u!58 &590364714001849107
 CircleCollider2D:
   m_ObjectHideFlags: 0
