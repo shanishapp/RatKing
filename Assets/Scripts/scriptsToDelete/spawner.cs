@@ -9,6 +9,7 @@ public class spawner : MonoBehaviour
 {
     public float spawnGoodsSpeed;
     public int numOfGoods;
+    public GameObject[] cats;
 
 
     // Start is called before the first frame update
