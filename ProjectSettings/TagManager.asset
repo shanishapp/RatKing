@@ -11,6 +11,8 @@ TagManager:
   - eventSystem
   - sceneManager
   - badBall
+  - regularShape
+  - differentShape
   layers:
   - Default
   - TransparentFX
