@@ -39,15 +39,17 @@ public class beamLogic : MonoBehaviour
 
     IEnumerator killEnemy(GameObject other)
     {
+        GetComponent<AudioSource>().Play();
         transform.DOScale(0, 0.5f);
-        GameObject go = Instantiate(explodeAnim,other.transform.position,other.transform.rotation);
-        //explodeAnim.transform.position = other.transform.position;
+        GameObject go = Instantiate(explodeAnim);
+        go.transform.position = other.transform.position;
         go.GetComponent<Animator>().ResetTrigger("startShoot");
         go.GetComponent<Animator>().SetTrigger("stopShoot");
         Destroy(other);
         EventManagerScript.Instance.TriggerEvent(EventManagerScript.EVENT__SHOOT_RIGHT,null);
         yield return new WaitForSeconds(0.5f);
         Destroy(go);
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
 

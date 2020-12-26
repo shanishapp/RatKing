@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = System.Random;
 
 public class EnemyHandlerScript : MonoBehaviour
@@ -10,42 +13,39 @@ public class EnemyHandlerScript : MonoBehaviour
     public GameObject[] shapes;
     private float radius = 5f;
     public Camera camera;
+    private float radiusFactor = 0f;        
+    public TMP_Text tmpLEVEL;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         EventManagerScript.Instance.StartListening(EventManagerScript.EVENT__SHOOT_RIGHT, OnShootRight);
-        EventManagerScript.Instance.StartListening(EventManagerScript.EVENT__SHOOT_WRONG, OnShootWrong);
         spawnShapes();
     }
 
-    private void OnShootWrong(object arg0)
-    {
-        StartCoroutine(overGame());
-    }
-
+    
     private void OnShootRight(object arg0)
     {
         StartCoroutine(nextLevel());
     }
 
-    IEnumerator overGame()
-    {
-        yield return new WaitForSeconds(4f);
-        SceneManager.LoadScene(2);
-    }
+
     IEnumerator nextLevel()
     {
         yield return new WaitForSeconds(2f);
+        radiusFactor += 0.1f;
         level++;
+        tmpLEVEL.text = level.ToString();
+        EventManagerScript.Instance.TriggerEvent(EventManagerScript.EVENT__NEXT_LEVEL,null);
         spawnShapes();
 
     }
 
     private void spawnShapes()
     {
-        camera.orthographicSize += 0.1f;
+        camera.DOOrthoSize(camera.orthographicSize+0.1f,1f);
         radius += 0.5f;
         int numOfShapes = level + 3;
         Random random = new Random();
@@ -68,10 +68,11 @@ public class EnemyHandlerScript : MonoBehaviour
             {
                 enemyi= Instantiate(shapes[level%9]) as GameObject;
             }
-    
+
+            enemyi.GetComponent<EnemyScript>().radiusFactor = radiusFactor;
             float xPosition = radius * Mathf.Cos(angle * index);
             float yPosition = radius * Mathf.Sin(angle * index);
-    
+
             enemyi.transform.position = new Vector2(xPosition, yPosition);
         }
     }

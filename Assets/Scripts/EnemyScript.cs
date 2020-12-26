@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyScript : MonoBehaviour
 {
@@ -9,9 +11,10 @@ public class EnemyScript : MonoBehaviour
     private bool gameOver = false;
     private Vector2 target;
     private Vector3 initialPosition;
-    private bool passedLevel = false;
-
-    public static int speed = 1;
+    private bool passedLevel = false; 
+    
+    public float radiusFactor = 0f;
+    public static int speed = 4;
     
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,7 @@ public class EnemyScript : MonoBehaviour
     private void OnShootWrong(object arg0)
     {
         gameOver = true;
+        speed = 8;
     }
 
     private void OnShootRight(object arg0)
@@ -38,7 +42,7 @@ public class EnemyScript : MonoBehaviour
     void Update()
     {
         float step =  speed * Time.deltaTime;
-        if (noWait && Vector3.Distance(transform.position, target) < 2f)
+        if (Vector3.Distance(transform.position, target) < 3f+radiusFactor)
         {
             if (passedLevel)
             {
@@ -46,20 +50,16 @@ public class EnemyScript : MonoBehaviour
             }
             else
             {
-                noWait = false;
-                StartCoroutine(idle());
+                transform.position = Vector2.MoveTowards(transform.position, target, step/10f);
             }
         }
-        else if(Vector3.Distance(transform.position, target) >= 2f || noWait || gameOver)
+        else if(Vector3.Distance(transform.position, target) >= 3f+radiusFactor || noWait || gameOver)
         {
             transform.position = Vector2.MoveTowards(transform.position, target, step);
         } 
     }
 
-    IEnumerator idle()
-    {
-        yield return new WaitForSeconds(2f);
-        noWait = true;
-    }
+
+
 
 }

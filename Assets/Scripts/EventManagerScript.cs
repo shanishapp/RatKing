@@ -14,6 +14,8 @@ public class EventManagerScript : Singleton<EventManagerScript>
 
     public const string EVENT__SHOOT_RIGHT = "event_shootRight";
     public const string EVENT__SHOOT_WRONG = "event_shootWrong";
+    public const string EVENT__GAME_OVER = "event_gameOver";
+    public const string EVENT__NEXT_LEVEL = "event_nextLevel";
 
     private Dictionary <string, FloatEvent> eventDictionary;
 	
