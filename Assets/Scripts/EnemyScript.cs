@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +12,8 @@ public class EnemyScript : MonoBehaviour
     private bool gameOver = false;
     private Vector2 target;
     private Vector3 initialPosition;
-    private bool passedLevel = false; 
+    private bool passedLevel = false;
+    public int waveIndex;
     
     public float radiusFactor = 0f;
     public static int speed = 4;
@@ -27,15 +29,26 @@ public class EnemyScript : MonoBehaviour
 
     private void OnShootWrong(object arg0)
     {
-        gameOver = true;
-        speed = 8;
+        int wave = (int) arg0;
+        if (wave == waveIndex)
+        {
+            gameOver = true;
+            speed = 8;
+        }
     }
 
     private void OnShootRight(object arg0)
     {
-        passedLevel = true;
-        noWait = true;
-        target = initialPosition+initialPosition;
+        int wave = (int) arg0;
+        if (wave == waveIndex)
+        {
+            passedLevel = true;
+            noWait = true;
+            target = initialPosition + initialPosition;
+            float DegAngle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
+            var rot = new Vector3(0, 0, DegAngle-45+180);
+            transform.DORotate(rot, .1f);
+        }
     }
 
     // Update is called once per frame
@@ -58,8 +71,4 @@ public class EnemyScript : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, target, step);
         } 
     }
-
-
-
-
 }

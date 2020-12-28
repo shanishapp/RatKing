@@ -30,7 +30,8 @@ public class beamLogic : MonoBehaviour
         } 
         else if (!other.transform.CompareTag("cat"))
         {
-            EventManagerScript.Instance.TriggerEvent(EventManagerScript.EVENT__SHOOT_WRONG,null);
+            int wave = other.GetComponent<EnemyScript>().waveIndex;
+            EventManagerScript.Instance.TriggerEvent(EventManagerScript.EVENT__SHOOT_WRONG,wave);
             Destroy(gameObject);
         }
     }
@@ -40,17 +41,17 @@ public class beamLogic : MonoBehaviour
     IEnumerator killEnemy(GameObject other)
     {
         GetComponent<AudioSource>().Play();
+        int wave = other.GetComponent<EnemyScript>().waveIndex;
         transform.DOScale(0, 0.5f);
         GameObject go = Instantiate(explodeAnim);
         go.transform.position = other.transform.position;
         go.GetComponent<Animator>().ResetTrigger("startShoot");
         go.GetComponent<Animator>().SetTrigger("stopShoot");
         Destroy(other);
-        EventManagerScript.Instance.TriggerEvent(EventManagerScript.EVENT__SHOOT_RIGHT,null);
-        yield return new WaitForSeconds(0.5f);
-        Destroy(go);
-        yield return new WaitForSeconds(0.5f);
+        EventManagerScript.Instance.TriggerEvent(EventManagerScript.EVENT__SHOOT_RIGHT,wave);
         Destroy(gameObject);
+        yield return null;
+
     }
 
 }

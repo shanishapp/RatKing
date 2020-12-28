@@ -6,7 +6,7 @@ using Random = System.Random;
 
 public class shapeLogic : MonoBehaviour
 {
-    public Light2D light;
+    private Light2D light;
     static Random random = new Random();
 
 
@@ -19,23 +19,11 @@ public class shapeLogic : MonoBehaviour
     IEnumerator flickerPlayer()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        light = transform.GetChild(0).gameObject.GetComponent<Light2D>();
         float r1 = (float)random.Next(0,255) / 255f;
-        float r2 = (float)random.Next(0,255) / 255f;
-       
-        while(true)
-        {
-            yield return new WaitForSeconds (0.1f);
-            sr.color = Color.HSVToRGB(r1, 1, 1);
-            light.color =  Color.HSVToRGB(r1, 1, 1);
-            yield return new WaitForSeconds (0.1f); 
-            sr.color = new Color(0,0, 0,0);
-            yield return new WaitForSeconds (0.1f);
-            sr.color = Color.HSVToRGB(r2, 1, 1);
-            light.color =  Color.HSVToRGB(r2, 1, 1);
-            yield return new WaitForSeconds (0.1f); 
-            sr.color = new Color(0,0, 0,0);
-            
-        }
+        sr.color = Color.HSVToRGB(r1, 1, 1);
+        light.color =  Color.HSVToRGB(r1, 1, 1);
+        yield return new WaitForSeconds (0.1f);
     }
 
 }

@@ -10,15 +10,20 @@ namespace DefaultNamespace
 {
     public class playerLogic : MonoBehaviour
     {
-        private float time = 0;
         public GameObject beam;
         public float mPlayerSpeed;
-        private SpriteRenderer _sr;
         public float shootTimer = 0.3f;
         public Transform shootingTransform;
         public Transform shootingAnimTransform;
         public GameObject shootAnim;
         public float radius = 0.5f;
+        public float angle = 0.1f;
+        public int numOfShapes;
+        
+        private float time = 0;
+        private SpriteRenderer _sr;
+        private float stepIndex = 0;
+
         private void Start()
         {
             EventManagerScript.Instance.StartListening(EventManagerScript.EVENT__NEXT_LEVEL,startNextLevel);
@@ -36,31 +41,31 @@ namespace DefaultNamespace
 
         private void Update()
         {
-            float angle;
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                time += (Time.deltaTime * mPlayerSpeed );
-                float x = Mathf.Cos(time ) * radius;
-                float y = Mathf.Sin(time ) * radius;
+                stepIndex = stepIndex + mPlayerSpeed;
+                float x = Mathf.Cos(angle * ((int)stepIndex % numOfShapes)) * radius;
+                float y = Mathf.Sin(angle * ((int)stepIndex % numOfShapes) ) * radius;
                 float oldx = transform.position.x;
                 float oldy = transform.position.y;
 
                 transform.localPosition = new Vector3(x,y,0);
-                angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle-90)); 
+                float DegAngle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, DegAngle-90)); 
 
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
-                time -= (Time.deltaTime * mPlayerSpeed );
-                float x = Mathf.Cos(time ) * radius;
-                float y = Mathf.Sin(time ) * radius;
+                stepIndex = stepIndex - mPlayerSpeed;
+                float x = Mathf.Cos(angle * ((int)stepIndex % numOfShapes)) * radius;
+                float y = Mathf.Sin(angle * ((int)stepIndex % numOfShapes) ) * radius;
                 float oldx = transform.position.x;
                 float oldy = transform.position.y;
 
                 transform.localPosition = new Vector3(x,y,0);
-                angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle-90));            }
+                float DegAngle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, DegAngle-90));
+            }
             if (Input.GetButtonDown("Jump"))
             {
                 StopCoroutine("punchPlayer");
@@ -74,6 +79,13 @@ namespace DefaultNamespace
         {
             StopCoroutine("punchPlayer");
             StartCoroutine("punchPlayer");
+            stepIndex = 0;
+            float x = Mathf.Cos(angle * stepIndex) * radius;
+            float y = Mathf.Sin(angle * stepIndex ) * radius;
+
+            transform.localPosition = new Vector3(x,y,0);
+            float DegAngle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+            transform.localRotation = Quaternion.Euler(new Vector3(0, 0, DegAngle-90));
         }
 
         IEnumerator shootOnce()

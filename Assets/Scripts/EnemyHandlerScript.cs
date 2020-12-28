@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -11,10 +12,14 @@ public class EnemyHandlerScript : MonoBehaviour
 {
     public int level = 1;
     public GameObject[] shapes;
-    private float radius = 5f;
-    public Camera camera;
-    private float radiusFactor = 0f;        
     public TMP_Text tmpLEVEL;
+    public Camera camera;
+    public GameObject player;
+
+    private float radius = 5f;
+    private float radiusFactor = 0f;
+    private int waveIndex = 0;
+
 
 
 
@@ -28,7 +33,9 @@ public class EnemyHandlerScript : MonoBehaviour
     
     private void OnShootRight(object arg0)
     {
-        StartCoroutine(nextLevel());
+        int wave = (int) arg0;
+        if(wave%2 == 1)
+            StartCoroutine(nextLevel());
     }
 
 
@@ -40,11 +47,14 @@ public class EnemyHandlerScript : MonoBehaviour
         tmpLEVEL.text = level.ToString();
         EventManagerScript.Instance.TriggerEvent(EventManagerScript.EVENT__NEXT_LEVEL,null);
         spawnShapes();
+        yield return new WaitForSeconds(2f);
+        spawnShapes();
 
     }
 
     private void spawnShapes()
     {
+        waveIndex++;
         camera.DOOrthoSize(camera.orthographicSize+0.1f,1f);
         radius += 0.5f;
         int numOfShapes = level + 3;
@@ -61,19 +71,28 @@ public class EnemyHandlerScript : MonoBehaviour
             GameObject enemyi;
             if (index == different)
             {
-                enemyi= Instantiate(shapes[(level+3) % 9]) as GameObject;
+                enemyi= Instantiate(shapes[(level+3) % 7]) as GameObject;
                 enemyi.tag = "differentShape";
             }
             else
             {
-                enemyi= Instantiate(shapes[level%9]) as GameObject;
+                enemyi= Instantiate(shapes[level%7]) as GameObject;
             }
 
             enemyi.GetComponent<EnemyScript>().radiusFactor = radiusFactor;
+            enemyi.GetComponent<EnemyScript>().waveIndex = waveIndex;
             float xPosition = radius * Mathf.Cos(angle * index);
             float yPosition = radius * Mathf.Sin(angle * index);
 
             enemyi.transform.position = new Vector2(xPosition, yPosition);
+            float DegAngle = Mathf.Atan2(yPosition, xPosition) * Mathf.Rad2Deg;
+            enemyi.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, DegAngle-45)); 
+            if (index == 0)
+            {
+                //set the angle the player can use
+                player.GetComponent<playerLogic>().angle = angle;
+                player.GetComponent<playerLogic>().numOfShapes = numOfShapes;
+            }
         }
     }
 }
