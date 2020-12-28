@@ -44,9 +44,13 @@ public class Menu : MonoBehaviour
     IEnumerator loadGameOver()
     {
         //gameScene.transform.DOScale(0, 1f);
-        yield return new WaitForSeconds(1f);
-        Destroy(currentGO);
+        var temp = currentGO;
+        temp.SetActive(false);
         gameOverScene.SetActive(true);
         currentGO = gameOverScene;
+        yield return new WaitForSeconds(1f);
+        Destroy(temp);
+
+
     }
 }
