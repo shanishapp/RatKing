@@ -12,6 +12,7 @@ public class beamLogic : MonoBehaviour
     public float mBeamSpeed;
     private Rigidbody2D _rb;
     public GameObject explodeAnim;
+    public GameObject goodWinAnim;
 
     private void Start()
     {
@@ -44,6 +45,7 @@ public class beamLogic : MonoBehaviour
         int wave = other.GetComponent<EnemyScript>().waveIndex;
         transform.DOScale(0, 0.5f);
         GameObject go = Instantiate(explodeAnim);
+        Instantiate(goodWinAnim);
         go.transform.position = other.transform.position;
         go.GetComponent<Animator>().ResetTrigger("startShoot");
         go.GetComponent<Animator>().SetTrigger("stopShoot");

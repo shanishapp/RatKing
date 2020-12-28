@@ -7,19 +7,15 @@ using UnityEngine.SceneManagement;
 
 public class earthLogic : MonoBehaviour
 {
+    public GameObject gameManager;
     private void OnTriggerEnter2D(Collider2D other)
     {
         GetComponent<Collider2D>().enabled = false;
         transform.DOScale(0, 1);
-        StartCoroutine(loadGameOver());
+        EventManagerScript.Instance.TriggerEvent(EventManagerScript.EVENT__GAME_OVER,null);
     }
 
    
 
-    IEnumerator loadGameOver()
-    {
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(2);
-
-    }
+    
 }

@@ -41,9 +41,9 @@ namespace DefaultNamespace
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                stepIndex = stepIndex + mPlayerSpeed;
+                stepIndex = stepIndex + 1;
                 float x = Mathf.Cos(angle * ((int)stepIndex % numOfShapes)) * radius;
                 float y = Mathf.Sin(angle * ((int)stepIndex % numOfShapes) ) * radius;
                 float oldx = transform.position.x;
@@ -54,9 +54,9 @@ namespace DefaultNamespace
                 transform.localRotation = Quaternion.Euler(new Vector3(0, 0, DegAngle-90)); 
 
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                stepIndex = stepIndex - mPlayerSpeed;
+                stepIndex = stepIndex - 1;
                 float x = Mathf.Cos(angle * ((int)stepIndex % numOfShapes)) * radius;
                 float y = Mathf.Sin(angle * ((int)stepIndex % numOfShapes) ) * radius;
                 float oldx = transform.position.x;

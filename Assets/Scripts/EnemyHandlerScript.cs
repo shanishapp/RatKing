@@ -13,8 +13,9 @@ public class EnemyHandlerScript : MonoBehaviour
     public int level = 1;
     public GameObject[] shapes;
     public TMP_Text tmpLEVEL;
-    public Camera camera;
+    private Camera camera;
     public GameObject player;
+    public Transform gameScene;
 
     private float radius = 5f;
     private float radiusFactor = 0f;
@@ -26,6 +27,7 @@ public class EnemyHandlerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         EventManagerScript.Instance.StartListening(EventManagerScript.EVENT__SHOOT_RIGHT, OnShootRight);
         spawnShapes();
     }
@@ -81,6 +83,7 @@ public class EnemyHandlerScript : MonoBehaviour
 
             enemyi.GetComponent<EnemyScript>().radiusFactor = radiusFactor;
             enemyi.GetComponent<EnemyScript>().waveIndex = waveIndex;
+            enemyi.transform.SetParent(gameScene);
             float xPosition = radius * Mathf.Cos(angle * index);
             float yPosition = radius * Mathf.Sin(angle * index);
 

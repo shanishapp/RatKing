@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3458306918174119973}
   - component: {fileID: 3785529122406394330}
   - component: {fileID: 8169428290607992749}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mBeamSpeed: 5
   explodeAnim: {fileID: 8602626059022166328, guid: d2c84101d68700b41bc27fd6bdec0d1b, type: 3}
+  goodWinAnim: {fileID: 7502536666772186763, guid: 83d32127e336a094ba7724d96a1db1ce, type: 3}
 --- !u!50 &3458306918174119973
 Rigidbody2D:
   serializedVersion: 4
@@ -244,7 +245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1532388242709956200}
   - component: {fileID: 5780599741432840446}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

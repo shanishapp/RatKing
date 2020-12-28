@@ -16,7 +16,7 @@ public class EnemyScript : MonoBehaviour
     public int waveIndex;
     
     public float radiusFactor = 0f;
-    public static int speed = 4;
+    public float speed = 6;
     
     // Start is called before the first frame update
     void Start()
@@ -25,6 +25,21 @@ public class EnemyScript : MonoBehaviour
         initialPosition = transform.position;
         EventManagerScript.Instance.StartListening(EventManagerScript.EVENT__SHOOT_RIGHT, OnShootRight);
         EventManagerScript.Instance.StartListening(EventManagerScript.EVENT__SHOOT_WRONG, OnShootWrong);
+        EventManagerScript.Instance.StartListening(EventManagerScript.EVENT__CROSSED_CIRCLE, OnCrossedCircle);
+    }
+
+    private void OnCrossedCircle(object arg0)
+    {
+        int circle = (int) arg0;
+        if (circle == 1)
+        {
+            speed = 5;
+        }
+        else
+        {
+            speed = 4;
+        }
+
     }
 
     private void OnShootWrong(object arg0)
@@ -42,13 +57,16 @@ public class EnemyScript : MonoBehaviour
         int wave = (int) arg0;
         if (wave == waveIndex)
         {
+            GetComponent<Collider2D>().enabled = false;
             passedLevel = true;
             noWait = true;
             target = initialPosition + initialPosition;
             float DegAngle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
             var rot = new Vector3(0, 0, DegAngle-45+180);
             transform.DORotate(rot, .1f);
+            speed = 10;
         }
+
     }
 
     // Update is called once per frame

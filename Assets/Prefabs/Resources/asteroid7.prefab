@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578241932143478058}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.650001, y: 10.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 4431236751852233272}
@@ -46,8 +46,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Color: {r: 0, g: 0.4705882, b: 1, a: 1}
+  m_Intensity: 5
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000171d4b74
   m_LightCookieSprite: {fileID: -7105913188517789750, guid: 94702e625ea71814fbe774afb8ef950d, type: 3}
@@ -58,8 +58,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 0.3
+  m_PointLightInnerRadius: 0.33
+  m_PointLightOuterRadius: 2
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -102,7 +102,7 @@ Transform:
   m_GameObject: {fileID: 4431236751852233277}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.11, y: -2.16, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_Children:
   - {fileID: 9011547920716805285}
   m_Father: {fileID: 0}
@@ -204,6 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveIndex: 0
   radiusFactor: 0
+  speed: 8
 --- !u!58 &1450342396886302720
 CircleCollider2D:
   m_ObjectHideFlags: 0
