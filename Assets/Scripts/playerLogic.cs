@@ -96,9 +96,11 @@ namespace DefaultNamespace
             transform.DORewind ();
             transform.DOPunchScale (new Vector3 (0.01f, 0.01f, 0.01f), .25f);
             var position = shootingTransform.position + (Vector3.forward );
-            Instantiate(beam, position, localRotation);
+            GameObject beamgo = Instantiate(beam, position, localRotation);
             Quaternion shootRotation = Quaternion.AngleAxis(90, Vector3.forward) * localRotation;
             GameObject go = Instantiate(shootAnim, shootingAnimTransform.position, shootRotation);
+            beamgo.transform.SetParent(transform);
+            go.transform.SetParent(transform);
             yield return new WaitForSeconds(0.5f);
             GetComponent<AudioSource>().Stop();
             Destroy(go);

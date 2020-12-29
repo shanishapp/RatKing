@@ -163,8 +163,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: LEVEL
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70219f908fad69e44b8f021bdaee62e4, type: 2}
-  m_sharedMaterial: {fileID: -5065005642339702875, guid: 70219f908fad69e44b8f021bdaee62e4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a18da3e9f0d8f804ea6abede68c3bc86, type: 2}
+  m_sharedMaterial: {fileID: 1038462895535269677, guid: a18da3e9f0d8f804ea6abede68c3bc86, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -782,8 +782,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 70219f908fad69e44b8f021bdaee62e4, type: 2}
-  m_sharedMaterial: {fileID: -5065005642339702875, guid: 70219f908fad69e44b8f021bdaee62e4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a18da3e9f0d8f804ea6abede68c3bc86, type: 2}
+  m_sharedMaterial: {fileID: 1038462895535269677, guid: a18da3e9f0d8f804ea6abede68c3bc86, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -946,7 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b9cc2b6995745b4f86d739e5a86dda3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeFactor: -1
+  timeFactor: 1
   circleIndex: 1
 --- !u!60 &2651141198436601495
 PolygonCollider2D:

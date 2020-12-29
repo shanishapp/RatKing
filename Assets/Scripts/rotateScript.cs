@@ -15,12 +15,8 @@ public class rotateScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (firstCrash)
-        {
-            firstCrash = false;
-            time += Time.deltaTime*10*timeFactor;
-            transform.localRotation = Quaternion.Euler(new Vector3(0, 0, time));
-        }
+        time += Time.deltaTime*10*timeFactor;
+        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, time));
 
         
     }
@@ -30,6 +26,6 @@ public class rotateScript : MonoBehaviour
         EventManagerScript.Instance.TriggerEvent(EventManagerScript.EVENT__CROSSED_CIRCLE,circleIndex);
         GameObject.FindWithTag("MainCamera").transform.DORewind();
         GameObject.FindWithTag("MainCamera").transform.DOShakePosition(0.5f, Vector3.one * 0.1f);
-        firstCrash = true;
+            //firstCrash = true;
     }
 }

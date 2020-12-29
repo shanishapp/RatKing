@@ -24,12 +24,12 @@ public class Menu : MonoBehaviour
 
     public void gameOver(Object obj)
     {
-        camera.DOOrthoSize(3, 1f);
         StartCoroutine(loadGameOver());
     }
 
     public void playGame()
     {
+        camera.DOOrthoSize(3, 1f);
         currentGO.SetActive(false);
         gameScene.transform.DORewind();
         currentGO = Instantiate(gameScene);
@@ -43,7 +43,7 @@ public class Menu : MonoBehaviour
 
     IEnumerator loadGameOver()
     {
-        //gameScene.transform.DOScale(0, 1f);
+        
         var temp = currentGO;
         temp.SetActive(false);
         gameOverScene.SetActive(true);

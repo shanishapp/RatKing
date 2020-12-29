@@ -6,12 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/OpenMenu.unity
-    guid: 146d132073f7e534380608baac810527
-  - enabled: 1
     path: Assets/Scenes/game-shani.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/New Scene.unity
-    guid: 810d3f8b8a41ee64899b28b42cfcd52d
   m_configObjects: {}
